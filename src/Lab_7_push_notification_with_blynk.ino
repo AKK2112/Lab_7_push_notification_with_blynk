@@ -21,25 +21,27 @@ void setup() {
     display.clearDisplay();
     display.display();
   Blynk.begin("DISy_9aRsQHnyt8mtvZXh09rT-tdy72R", IPAddress(167, 172, 234, 162), 9090);
+    //initalizes blynk with the proper authorized token and ip address.
 }
 
 void loop() {
   display.loop();
   //telling the board where the tmp36 is and what it should do with the values from the temp sensor. 
   Blynk.run();
+  
 
-  if (display.pressedA()) {
+  if (display.pressedA()) { //When the A button is pressed, everything in this bracket is executed instead of the temperature.
     display.clearDisplay();
 
     display.setTextSize(1);
     display.setTextColor(WHITE);
     display.setCursor(0,0);
-    display.println("SECRET MESSAGE SENT!");
+    display.println("SECRET MESSAGE SENT!"); //displays "SECRET MESSAGE SENT!" on the OLED display
     display.display();
-    Blynk.notify("The secret message notification");
+    Blynk.notify("The secret message notification"); //sends a notification to my iPhone via blynk
     delay(5000);
   }
-  
+  //after the 5 second delay, continues to display the temperature. 
   uint64_t reading = analogRead(A4);
 
   double voltage = (reading * 3.3) / 4095.0;
@@ -61,10 +63,5 @@ void loop() {
     display.display();
     Serial.print(reading); Serial.print(temperatureC); Serial.print(","); Serial.println(temperatureF); //prints the different values I should be seeing on my OLED into my
                                                                                                         //serial monitor so I can make sure the OLED is working correctly.
-delay(500);
-
-
-  
-
-  
+delay(500); 
 }
